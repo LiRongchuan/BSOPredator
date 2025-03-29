@@ -1,2 +1,2 @@
 # BSOPredator
-![bso_lock_animation_30_8](https://github.com/user-attachments/assets/8e312440-38ec-48f9-93f8-70913ffecab4)
+![bso_lock_animation_30_8](https://github.com/user-attachments/assets/a801a89e-2ac9-4b8f-9526-21a1261bfd07)
