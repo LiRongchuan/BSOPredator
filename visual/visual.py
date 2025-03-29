@@ -40,6 +40,6 @@ class Plot:
         for i in range(5):
             frames.append([frame])
         ani = animation.ArtistAnimation(fig, frames, interval=100)
-        ani_file = f'{self.grid}_{self.Ns}.gif' if file is None else file
+        ani_file = f'output\\{self.grid}_{self.Ns}.gif' if file is None else 'output\\' + file
         ani.save(ani_file, writer='pillow', fps=fps)
         shutil.rmtree(self.frame_dir)
