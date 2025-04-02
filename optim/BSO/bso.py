@@ -56,7 +56,7 @@ def bso(p_robots, prey, grid, fit=fitness):
     for i in range(Ns):
         # Evaluate each position
         for j in range(Np):
-            f_robots[i, j] = fit(p_robots[:, 0], i, p_robots[i, j], prey)
+            f_robots[i, j] = fit(p_robots[:, 0], i, p_robots[i, j], prey, grid)
             if f_robots[i, j] < f_group[i]:
                 f_group[i] = f_robots[i, j]
                 p_group[i] = p_robots[i, j]
@@ -79,7 +79,7 @@ def bso(p_robots, prey, grid, fit=fitness):
                 real_angle = np.arctan2(p_ij[1] - p_robots[i, 0, 1], p_ij[0] - p_robots[i, 0, 0])
                 diff = (bound_angle - real_angle + np.pi) % (2 * np.pi) - np.pi
                 p_ij = p_robots[i, 0] + vicinity * SN[np.argmin(np.abs(diff))]
-            f_ij = fit(p_robots[:, 0], i, p_ij, prey)
+            f_ij = fit(p_robots[:, 0], i, p_ij, prey, grid)
             if f_ij <= f_robots[i, j]:
                 f_robots[i, j] = f_ij
                 p_robots[i, j] = p_ij
@@ -90,12 +90,16 @@ def bso(p_robots, prey, grid, fit=fitness):
             if np.any(np.all(legal_steps(p_robots[i, 0]) == step, axis=1)):
                 p_robots[i, 0] += step
         else:
-            target = p_group[i]
-            v = target - p_robots[i, 0]
             steps = legal_steps(p_robots[i, 0])
-            dot_products = np.dot(steps, v) / (np.linalg.norm(steps, axis=1) + 1e-6)
-            index = np.argmax(dot_products)
-            step = steps[index]
+            step = steps[np.argmin(np.linalg.norm(p_robots[i, 0] + steps - prey, axis=1))]
             p_robots[i, 0] += step
+        # else:
+        #     target = prey if np.linalg.norm(p_robots[i, 0] - prey) >= 10 else p_group[i]
+        #     v = target - p_robots[i, 0]
+        #     steps = legal_steps(p_robots[i, 0])
+        #     dot_products = np.dot(steps, v) / (np.linalg.norm(steps, axis=1) + 1e-6)
+        #     index = np.argmax(dot_products)
+        #     step = steps[index]
+        #     p_robots[i, 0] += step
             
     history = prey

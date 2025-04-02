@@ -1,0 +1,10 @@
+Predators=8, Grid=30*30BSO Moves=55
+BSO Moves=68
+BSO Moves=48
+BSO Moves=50
+BSO Moves=33
+BSO Moves=33
+BSO Moves=51
+BSO Moves=20
+BSO Moves=63
+BSO Moves=30

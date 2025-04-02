@@ -1,0 +1,10 @@
+Predators=8, Grid=30*30Failed
+BSO Moves=21
+BSO Moves=57
+BSO Moves=52
+BSO Moves=71
+BSO Moves=84
+BSO Moves=26
+BSO Moves=39
+BSO Moves=24
+BSO Moves=71

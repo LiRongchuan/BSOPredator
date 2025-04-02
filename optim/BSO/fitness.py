@@ -34,8 +34,9 @@ def fitness_closure(robots, idx, pos, prey):
     return 1
 
 def fitness_expanse(robots, idx, pos, prey):
-    robots[idx] = pos
-    return np.sum(np.linalg.norm(robots - prey, axis=1)) / len(robots)
+    # robots[idx] = pos
+    # return np.sum(np.linalg.norm(robots - prey, axis=1)) / len(robots)
+    return np.linalg.norm(pos - prey)
 
 def fitness_uniformity(robots, idx, pos, prey):
     robots[idx] = pos
@@ -51,9 +52,9 @@ def fitness_uniformity(robots, idx, pos, prey):
     std = np.std(np.array([sum(mask11), sum(mask12), sum(mask13), sum(mask21), sum(mask22), sum(mask23), sum(mask31), sum(mask32), sum(mask33)]))
     return std
 
-def fitness(robots, idx, pos, prey, Dmin=1):
+def fitness(robots, idx, pos, prey, grid, Dmin=1):
     f_repel = fitness_repel(robots.copy(), idx, pos, Dmin)
     f_closure = fitness_closure(robots.copy(), idx, pos, prey)
     f_expanse = fitness_expanse(robots.copy(), idx, pos, prey)
     f_uniformity = fitness_uniformity(robots.copy(), idx, pos, prey)
-    return f_repel * (f_closure + f_expanse + f_uniformity)
+    return f_repel * (f_closure + f_expanse + f_uniformity) / (np.linalg.norm(pos - robots[idx]) + 1)
