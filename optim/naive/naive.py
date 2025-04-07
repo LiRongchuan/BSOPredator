@@ -15,16 +15,7 @@ def naive(p_robots, prey, grid):
     This function modifies the p_robots.    
     """
     Ns, Np, _ = p_robots.shape # Robot number, virtual robot number, dimension
-    f_robots = np.zeros((Ns, Np)) # Fitness of each robot
-    p_group = np.zeros((Ns, 2), dtype=np.int32) # Best position of each group
-    f_group = np.full(Ns, np.inf) # Best fitness of each group
     SN = np.array([[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]])
-    bound_angle = np.arctan2(SN[:, 1], SN[:, 0])
-    
-    # Hyperparameters
-    vicinity = 5 # Neighborhood size
-    singal_prob = 0.5
-    keep_prob = 0.6
     
     # Helper functions
     def collide(pos):
@@ -52,13 +43,6 @@ def naive(p_robots, prey, grid):
         return steps
     
     for i in range(Ns):
-
-        # Update real robots
-        # if history is not None and np.linalg.norm(p_robots[i, 0] - history) <= 1.5:
-        #     step = prey - history
-        #     if np.any(np.all(legal_steps(p_robots[i, 0]) == step, axis=1)):
-        #         p_robots[i, 0] += step
-        # else:
         steps = legal_steps(p_robots[i, 0])
         step = steps[np.argmin(np.linalg.norm(p_robots[i, 0] + steps - prey, axis=1))]
         p_robots[i, 0] += step
