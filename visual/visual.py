@@ -12,17 +12,18 @@ class Plot:
         self.scatter_virtuals = self.ax.scatter([], [], c='lightgreen', marker='o', label='Virtual Robots', s=10)
         self.scatter_robots = self.ax.scatter([], [], c='blue', marker='s', label='Real Robots', s=20)
         self.scatter_prey = self.ax.scatter([], [], c='red', marker='*', label='Prey', s=50)
+        self.scatter_captured = self.ax.scatter([], [], c='green', marker='*', label='Prey', s=50)
         self.frame_text = self.ax.text(0.05, 0.95, '', transform=self.ax.transAxes, fontsize=12, color='white', bbox=dict(facecolor='black', alpha=0.5))
         self.ax.legend(loc='upper right')
         self.frame_dir = 'temp'
         self.cnt = 0
         os.makedirs(self.frame_dir, exist_ok=True)
     
-    def update(self, p_robots, prey):
+    def update(self, p_robots, preys):
         self.Ns = p_robots.shape[0]
         self.scatter_virtuals.set_offsets(p_robots[:, 1:].reshape(-1, 2))
         self.scatter_robots.set_offsets(p_robots[:, 0])
-        self.scatter_prey.set_offsets(prey)
+        self.scatter_prey.set_offsets(preys)
         frame_path = os.path.join(self.frame_dir, f'frame_{self.cnt:03d}.png')
         plt.savefig(frame_path)
         self.cnt += 1

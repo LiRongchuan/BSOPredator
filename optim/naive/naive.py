@@ -1,8 +1,6 @@
 import numpy as np
-history = None # History of prey position
 
-def naive(p_robots, prey, grid):
-    global history
+def naive(p_robots, preys, grid):
     """
     Naive algorithm for optimization.
     
@@ -14,15 +12,12 @@ def naive(p_robots, prey, grid):
     
     This function modifies the p_robots.    
     """
-    Ns, Np, _ = p_robots.shape # Robot number, virtual robot number, dimension
+    Ns, _, _ = p_robots.shape # Robot number, virtual robot number, dimension
     SN = np.array([[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]])
     
     # Helper functions
     def collide(pos):
-        for robot in p_robots[:, 0]:
-            if np.all(pos == robot):
-                return True
-        return np.all(pos == prey)
+        return np.any(np.all(pos == p_robots[:, 0], axis=1)) or np.any(np.all(pos == preys, axis=1))
     
     def legal_steps(pos):
         steps = np.array([[0, 0]], dtype=np.int32)
@@ -44,7 +39,7 @@ def naive(p_robots, prey, grid):
     
     for i in range(Ns):
         steps = legal_steps(p_robots[i, 0])
-        step = steps[np.argmin(np.linalg.norm(p_robots[i, 0] + steps - prey, axis=1))]
+        targets = p_robots[i, 0] + steps
+        distances = np.linalg.norm(targets[:, None, :] - preys[None, :, :], axis=2)
+        step = steps[distances.min(axis=1).argmin()]
         p_robots[i, 0] += step
-            
-    history = prey
