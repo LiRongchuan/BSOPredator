@@ -1,6 +1,6 @@
 import numpy as np
 
-def naive(p_robots, preys, grid):
+def greedy(p_robots, preys, grid):
     """
     Naive algorithm for optimization.
     

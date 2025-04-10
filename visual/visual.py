@@ -12,7 +12,6 @@ class Plot:
         self.scatter_virtuals = self.ax.scatter([], [], c='lightgreen', marker='o', label='Virtual Robots', s=10)
         self.scatter_robots = self.ax.scatter([], [], c='blue', marker='s', label='Real Robots', s=20)
         self.scatter_prey = self.ax.scatter([], [], c='red', marker='*', label='Prey', s=50)
-        self.scatter_captured = self.ax.scatter([], [], c='green', marker='*', label='Prey', s=50)
         self.frame_text = self.ax.text(0.05, 0.95, '', transform=self.ax.transAxes, fontsize=12, color='white', bbox=dict(facecolor='black', alpha=0.5))
         self.ax.legend(loc='upper right')
         self.frame_dir = 'temp'
@@ -44,3 +43,4 @@ class Plot:
         ani_file = f'output\\{self.grid}_{self.Ns}.gif' if file is None else 'output\\' + file
         ani.save(ani_file, writer='pillow', fps=fps)
         shutil.rmtree(self.frame_dir)
+        plt.close(fig)
